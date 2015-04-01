@@ -1,8 +1,14 @@
-# Setting up the app
+# Sitepoint Frontend Test Answer
 
-# Running the tests
+## Setting up the app
 
-# Build thoughts
+...
+
+## Running the tests
+
+...
+
+## Build thoughts
 
 These are some thoughts about the decisions I'm making and the project structure as I set this project up.
 
@@ -10,6 +16,6 @@ These are some thoughts about the decisions I'm making and the project structure
 
     app.use(express.static(__dirname + '/static'));
 
-To the server and split the css/js out into their own folders (styles and scripts respectivly)
+To the server and split the css/js out into their own folders (styles and scripts respectively)
 
 I also removed two catch alls at the end of the script which would serve the index.html instead of a 404 - this caused problems with debugging as it's useful to know when a file doesn't exist.

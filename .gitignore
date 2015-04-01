@@ -1,0 +1,12 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+/coverage
+npm-debug.log
+**/.DS_Store
+*.sublime-project
+*.sublime-workspace
+node_modules

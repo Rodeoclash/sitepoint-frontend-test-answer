@@ -1,8 +1,7 @@
-var Marty = require('marty');
-var React = require('react');
-var CounterStore = require('../../store');
-var CounterAdd = require('../add/view.jsx');
-var CounterTable = require('../table/view.jsx');
+import React from 'react';
+import Marty from 'marty';
+import CounterAdd from '../add/view.jsx';
+import CounterTable from '../table/view.jsx';
 require('./style.less');
 
 module.exports = React.createClass({

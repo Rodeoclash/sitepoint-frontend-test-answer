@@ -14,28 +14,28 @@ class CounterAPI extends Marty.HttpStateSource {
       .catch((error) => CounterActions.recieveCountersFailed(error));
   }
 
-  createCounter(payload) {
-    return this.post('/counter', payload)
+  createCounter(counter) {
+    return this.post({url: '/counter', body: counter})
       .then((response) => CounterActions.createdCounter(response.body))
       .catch((error) => CounterActions.createCounterFailed(error));
   }
 
-  deleteCounter(id) {
-    return this.delete('/counter', {id: id})
-      .then((response) => CounterActions.deletedCounter(response.body))
-      .catch((error) => CounterActions.deleteCounterFailed(error));
+  destroyCounter(id) {
+    return this.delete({url: '/counter', body: {id: id}})
+      .then((response) => CounterActions.destroyedCounter(response.body))
+      .catch((error) => CounterActions.destroyCounterFailed(error));
   }
 
   incrementCounter(id) {
-    return this.post('/counter/inc', {id: id})
-      .then((response) => CounterActions.incrementedCounter(response.body))
-      .catch((error) => CounterActions.incrementCounterFailed(error));
+    return this.post({url: '/counter/inc', body: {id: id}})
+      .then((response) => CounterActions.adjustedCounter(response.body))
+      .catch((error) => CounterActions.adjustCounterFailed(error));
   }
 
   decrementCounter(id) {
-    return this.post('/counter/dec', {id: id})
-      .then((response) => CounterActions.decrementedCounter(response.body))
-      .catch((error) => CounterActions.decrementCounter(error));
+    return this.post({url: '/counter/dec', body: {id: id}})
+      .then((response) => CounterActions.adjustedCounter(response.body))
+      .catch((error) => CounterActions.adjustCounterFailed(error));
   }
 
 }

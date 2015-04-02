@@ -19,3 +19,12 @@ These are some thoughts about the decisions I'm making and the project structure
 To the server and split the css/js out into their own folders (styles and scripts respectively)
 
 I also removed two catch alls at the end of the script which would serve the index.html instead of a 404 - this caused problems with debugging as it's useful to know when a file doesn't exist.
+
+## 3rd party libs
+
+* Webpack (ES6 syntax, packaged assets, modular build)
+* React
+* ImmutableJS (easy state updates)
+* MartyJS (flux pattern implementation)
+* Jest (test runner, mocks and assertions)
+* Docker/Docker-compose (local environment management)

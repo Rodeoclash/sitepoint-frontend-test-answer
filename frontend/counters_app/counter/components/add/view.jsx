@@ -1,6 +1,6 @@
-var Marty = require('marty');
-var React = require('react');
-var CounterActions = require('../../actions');
+import React from 'react';
+import Marty from 'marty';
+import CounterActions from '../../actions';
 //require('./style.less');
 
 module.exports = React.createClass({
@@ -13,9 +13,11 @@ module.exports = React.createClass({
   },
 
   handleClick: function (event) {
+    event.preventDefault();
     if (!this.disabled()) {
       CounterActions.createCounter({title: this.state.title});
     }
+    this.setState({title: ''});
   },
 
   handleChange: function (event) {
@@ -30,7 +32,7 @@ module.exports = React.createClass({
     return (
       <form className="counter-add">
         <input className="counter-add__input" type="text" value={this.state.title} onChange={this.handleChange} />
-        <button className="counter-add__submit" disabled={this.disabled()} onClick={this.handleClick}>Add {this.state.title}</button>
+        <button className="counter-add__submit" disabled={this.disabled()} onClick={this.handleClick}>Add: {this.state.title}</button>
       </form>
     );
   }

@@ -24,40 +24,28 @@ class CounterActions extends Marty.ActionCreators {
     this.dispatch(CounterConstants.CREATE_FAILED, error);
   }
 
-  deleteCounter(counters) {
-    this.dispatch(CounterConstants.DELETE, counters);
+  destroyCounter(counters) {
+    this.dispatch(CounterConstants.DESTROY, counters);
   }
 
-  deletedCounter(counters) {
-    this.dispatch(CounterConstants.DELETED, counters);
+  destroyedCounter(counters) {
+    this.dispatch(CounterConstants.DESTROYED, counters);
   }
 
-  deleteCounterFailed(error) {
-    this.dispatch(CounterConstants.DELETE_FAILED, error);
+  destroyCounterFailed(error) {
+    this.dispatch(CounterConstants.DESTROY_FAILED, error);
   }
 
-  incrementCounter(counters) {
-    this.dispatch(CounterConstants.INCREMENT, counters);
+  adjustCounter(counter, amount) {
+    this.dispatch(CounterConstants.ADJUST, counter, amount);
   }
 
-  incrementedCounter(counters) {
-    this.dispatch(CounterConstants.INCREMENTED, counters);
+  adjustedCounter(counters) {
+    this.dispatch(CounterConstants.ADJUSTED, counters);
   }
 
-  incrementCounterFailed(error) {
-    this.dispatch(CounterConstants.INCREMENT_FAILED, error);
-  }
-
-  decrementedCounter(counters) {
-    this.dispatch(CounterConstants.DECREMENT, counters);
-  }  
-
-  decrementedCounter(counters) {
-    this.dispatch(CounterConstants.DECREMENTED, counters);
-  }
-
-  decrementCounterFailed(error) {
-    this.dispatch(CounterConstants.DECREMENT_FAILED, error);
+  adjustCounterFailed(error) {
+    this.dispatch(CounterConstants.ADJUST_FAILED, error);
   }
 
 }

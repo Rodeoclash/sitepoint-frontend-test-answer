@@ -10,7 +10,7 @@ The development environment itself supports automatic code watching the compilat
 
 ## Running the tests
 
-```npm test``` will begin Jest and execute the tests. Two _todos_ for the tests are:
+```npm test``` will begin Jest and execute the tests. Two todos for the tests are:
 
 * The table component doesn't have tests due to the use of the MartyJS container. I'm not sure how to test it quite yet.
 * Some of the Jest tests use setTimeout to watch for ```setState()``` calls. ```jest.runAllTicks()``` should take care of this but doesn't, I'm not sure why.
@@ -49,5 +49,7 @@ This actually took quite a bit longer then I would have liked for a few reasons.
 - I wasn't too across using ImmutableJS but wanted to trail using it in an app.
 
 All up it was about 8 - 10 hours total. The actual business logic of the app was very straight forward with most of the time being consumed with enviromental things. Overall though I'm very happy with the outcome of the project and will likely use this setup or something very similar to it as a template for future React/Flux apps. I particually like having docker-compose so I don't have to pollute my machine with various libraries. It would also make deploying the app much easier.
+
+Also, ignore my commits. I normally make them very atomic but I got a bit lazy when building this and mainly used it as a backup system :/
 
 Sam (sam@richardson.co.nz)

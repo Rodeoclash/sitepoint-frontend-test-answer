@@ -1,11 +1,13 @@
 import React from 'react';
 import Marty from 'marty';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import CounterStore from '../../store';
 import CounterTableRow from '../table_row/view.jsx';
 require('./style.less');
 
 var ContainerTable = React.createClass({
   displayName: 'counter-table',
+  mixins: [ImmutableRenderMixin],
 
   render: function () {
 

@@ -9,9 +9,7 @@ class CounterStore extends Marty.Store {
   constructor(options) {
     super(options);
     this.id = 'CounterStore';
-    this.state = Immutable.Map({
-      counters: Immutable.OrderedSet()
-    });
+    this.state = Immutable.Map({});
     this.handlers = {
       createCounter: CounterConstants.CREATE,
       adjustCounter: CounterConstants.ADJUST,
@@ -33,7 +31,7 @@ class CounterStore extends Marty.Store {
     return this.fetch({
       id: 'all',
       locally() {
-        return this.state.get('counters').size === 0 ? undefined : this.state.get('counters');
+        return this.state.get('counters');
       },
       remotely() {
         return CounterAPI.getCounters();

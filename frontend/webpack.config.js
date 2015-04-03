@@ -6,8 +6,8 @@ module.exports = {
     application: "./counters_app/main"
   },
   output: {
-      path: __dirname + '/../static/scripts',
-      filename: "app.js"
+      path: __dirname + '/../static/scripts/apps',
+      filename: "counter.js"
   },
   module: {
     loaders: [

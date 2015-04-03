@@ -10,7 +10,10 @@ module.exports = {
 
     if (path.match(/\.jsx?$/)) {
       src = ReactTools.transform('/** @jsx React.DOM */' + src);
-    };
+    } else {
+      src = "";
+    }
+
     return src;
   }
 };

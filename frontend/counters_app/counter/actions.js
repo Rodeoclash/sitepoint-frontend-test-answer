@@ -2,52 +2,53 @@ import Marty from 'marty';
 import CounterConstants from './constants';
 var Dispatcher = Marty.dispatcher.getDefault();
 
-class CounterActions extends Marty.ActionCreators {
+var CounterActionCreators = Marty.createActionCreators({
+  id: 'CounterActionCreators',
 
-  recievedCounters(counters) {
+  recievedCounters: function(counters) {
     this.dispatch(CounterConstants.RECIEVED, counters);
-  }
+  },
 
-  recieveCountersFailed(error) {
+  recieveCountersFailed: function(error) {
     this.dispatch(CounterConstants.RECIEVE_FAILED, error);
-  }
+  },
 
-  createCounter(counters) {
+  createCounter: function(counters) {
     this.dispatch(CounterConstants.CREATE, counters);
-  }
+  },
 
-  createdCounter(counters) {
+  createdCounter: function(counters) {
     this.dispatch(CounterConstants.CREATED, counters);
-  }
+  },
 
-  createCounterFailed(error) {
+  createCounterFailed: function(error) {
     this.dispatch(CounterConstants.CREATE_FAILED, error);
-  }
+  },
 
-  destroyCounter(counters) {
+  destroyCounter: function(counters) {
     this.dispatch(CounterConstants.DESTROY, counters);
-  }
+  },
 
-  destroyedCounter(counters) {
+  destroyedCounter: function(counters) {
     this.dispatch(CounterConstants.DESTROYED, counters);
-  }
+  },
 
-  destroyCounterFailed(error) {
+  destroyCounterFailed: function(error) {
     this.dispatch(CounterConstants.DESTROY_FAILED, error);
-  }
+  },
 
-  adjustCounter(counter, amount) {
+  adjustCounter: function(counter, amount) {
     this.dispatch(CounterConstants.ADJUST, counter, amount);
-  }
+  },
 
-  adjustedCounter(counters) {
+  adjustedCounter: function(counters) {
     this.dispatch(CounterConstants.ADJUSTED, counters);
-  }
+  },
 
-  adjustCounterFailed(error) {
+  adjustCounterFailed: function(error) {
     this.dispatch(CounterConstants.ADJUST_FAILED, error);
   }
 
-}
+});
 
-module.exports = Marty.register(CounterActions);
+module.exports = CounterActionCreators;

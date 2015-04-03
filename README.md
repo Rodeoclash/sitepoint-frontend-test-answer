@@ -4,9 +4,11 @@
 
 ...
 
-## Running the tests
+## Tests
 
-...
+My testing strategy has been quite straight forward. For components, I'm only testing those that contain state, in this case that's just the validation around the <CounterAdd/> component. Other components simply broadcast events and it's unnecessary to test MartyJS / React functionality in component unit tests. 
+
+The other significant amount of testing occurs in the CounterStore component. It's test from the "outside" by simulating events and observing that the stores state matches what it should be.
 
 ## Build thoughts
 
@@ -16,7 +18,7 @@ These are some thoughts about the decisions I'm making and the project structure
 
     app.use(express.static(__dirname + '/static'));
 
-To the server and split the css/js out into their own folders (styles and scripts respectively)
+To the server and moved the counter.js into a scripts folder. This is how I would setup a project with the expectation that it might host multiple apps.
 
 I also removed two catch alls at the end of the script which would serve the index.html instead of a 404 - this caused problems with debugging as it's useful to know when a file doesn't exist.
 

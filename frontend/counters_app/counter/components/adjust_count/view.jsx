@@ -13,7 +13,7 @@ module.exports = React.createClass({
   render: function () {
     return (
       <span className="counter-adjust_count">
-        <button onClick={this.handleClick}>{this.props.value}</button>
+        <button className="counter-adjust-count__button" onClick={this.handleClick}>{this.props.value}</button>
       </span>
     );
   }

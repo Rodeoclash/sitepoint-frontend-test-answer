@@ -8,6 +8,11 @@ var ContainerTable = React.createClass({
   displayName: 'counter-table',
 
   render: function () {
+
+    if (this.props.counters.size === 0) {
+      return <p>Not counters found, why not create one?</p>;
+    };
+
     return (
       <table className="counter-table">
         <thead>
@@ -18,10 +23,10 @@ var ContainerTable = React.createClass({
             <td></td>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="counter-table__counters">
           {this.props.counters.map(function (counter) {
             return <CounterTableRow key={counter.id} counter={counter}/>
-          })}
+          }).toArray()}
         </tbody>
       </table>
     );

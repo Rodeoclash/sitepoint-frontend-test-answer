@@ -1,16 +1,16 @@
-jest.dontMock('../view.jsx'); 
+jest.dontMock('../view.jsx');
 
 import React from 'react/addons';
 var TestUtils = React.addons.TestUtils;
 var CounterActions = require('../../../actions.js');
 
-describe('ComponentAdd', function() {
+describe('CounterAdd', function() {
 
-  var CounterAdd, renderedView, input, submit;
+  var input, submit;
 
   beforeEach(function () {
-    CounterAdd = require('../view.jsx');
-    renderedView = TestUtils.renderIntoDocument(<CounterAdd/>);
+    var CounterAdd = require('../view.jsx');
+    var renderedView = TestUtils.renderIntoDocument(<CounterAdd/>);
     input = TestUtils.findRenderedDOMComponentWithClass(renderedView, 'counter-add__input');
     submit = TestUtils.findRenderedDOMComponentWithClass(renderedView, 'counter-add__submit');
   });
@@ -25,16 +25,25 @@ describe('ComponentAdd', function() {
     expect(submit.props.disabled).toBe(false);
   });
 
-  it('does not add counter when invalid', function () {
-    TestUtils.Simulate.change(input, {target: {value: ''}});
+  it('sends createCounter on submit', function () {
+    TestUtils.Simulate.change(input, {target: {value: 'My title'}});
     TestUtils.Simulate.click(submit);
-    expect(CounterActions.createCounter).not.toBeCalled();
+    setTimeout(function () { // TODO - should not use timeout
+      expect(CounterActions.createCounter).toBeCalledWith({title: 'My title'});
+    });
   });
 
-  it('adds counter when valid', function () {
-    TestUtils.Simulate.change(input, {target: {value: 'My counter'}});
+  it('resets counter title input after submit', function () {
+    TestUtils.Simulate.change(input, {target: {value: 'My title'}});
     TestUtils.Simulate.click(submit);
-    expect(CounterActions.createCounter).toBeCalledWith({title: 'My counter'});
+    setTimeout(function () { // TODO - should not use timeout
+      expect(input.props.value).toEqual('');  
+    });
+  });
+
+  it('updates submit button text', function () {
+    TestUtils.Simulate.change(input, {target: {value: 'My title'}});
+    expect(submit.getDOMNode().textContent).toEqual('Add: My title');
   });
 
 });

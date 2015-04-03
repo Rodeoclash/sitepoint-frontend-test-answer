@@ -27,6 +27,10 @@ These are some thoughts about the decisions I'm making and the project structure
 
     I also removed two catch alls at the end of the script which would serve the index.html instead of a 404 - this caused problems with debugging as it's useful to know when a file doesn't exist!
 
+## ES6 classes in MartyJS
+
+You might be wondering about my decision to not use the new ES6 class syntax in MartyJS. Simply put, I couldn't get it working with Jest. Jest would see the properties on the class but would not auto mock the functions on it. Switching back to the classic syntax allowed the classes to be automatically mocked again.
+
 ## Used 3rd party libs
 
 * Webpack (ES6 syntax, packaged assets, modular build)

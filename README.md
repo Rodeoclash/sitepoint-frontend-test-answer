@@ -10,7 +10,7 @@ The development environment itself supports automatic code watching the compilat
 
 ## Running the tests
 
-```npm test`` will begin Jest and execute the tests. Two _todos_ for the tests are:
+```npm test``` will begin Jest and execute the tests. Two _todos_ for the tests are:
 
 * The table component doesn't have tests due to the use of the MartyJS container. I'm not sure how to test it quite yet.
 * Some of the Jest tests use setTimeout to watch for ```setState()``` calls. ```jest.runAllTicks()``` should take care of this but doesn't, I'm not sure why.

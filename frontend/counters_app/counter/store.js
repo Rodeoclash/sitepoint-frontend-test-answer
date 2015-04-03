@@ -89,15 +89,29 @@ var CounterStore = Marty.createStore({
    * @return {promise}        Fulfilled when the server request completes
    */
   adjustCounter: function(counter, amount) {
-    this.state = this.state.withMutations(function(map) {
-      map.set('counters', map.get('counters').map(function (innerCounter) {
+    this.state = this.state.withMutations( (map) => {
+      map.set('counters', map.get('counters').map( (innerCounter) => {
         if (counter.id === innerCounter.id) {
-          innerCounter.count += amount;
+          return this.adjustCounterCount(counter, amount);
         }
         return innerCounter;
       }));
     });
     return (amount === 1) ? CounterAPI.incrementCounter(counter.id, amount) : CounterAPI.decrementCounter(counter.id, amount);
+  },
+
+  /**
+   * Takes a counter object and returns a new object with a modified count on it.
+   * @param  {object} counter Counter object
+   * @param  {number} amount  Amount to adjust by
+   * @return {object}         A new instance of the counter object with the adjusted count.
+   */
+  adjustCounterCount: function (counter, amount) {
+    return {
+      id: counter.id,
+      title: counter.title,
+      count: counter.count + amount
+    }
   }
 
 });

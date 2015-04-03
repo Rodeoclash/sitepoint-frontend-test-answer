@@ -14,7 +14,6 @@ module.exports = React.createClass({
 
   handleClick: function (event) {
     event.preventDefault();
-    console.log('here');
     CounterActions.createCounter({title: this.state.title});
     this.setState({title: ''});
   },

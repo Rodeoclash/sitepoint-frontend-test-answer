@@ -1,24 +1,23 @@
 jest.dontMock('../view.jsx');
-jest.dontMock('../../../store.js');
 
 import React from 'react/addons';
 var TestUtils = React.addons.TestUtils;
 
 describe('CounterTable', function() {
 
-  var CounterTable, renderedView;
+  var CounterStore;
 
-  /*
   beforeEach(function () {
-    CounterAdd = require('../view.jsx');
-    renderedView = TestUtils.renderIntoDocument(<CounterAdd/>);
-    counters = TestUtils.findRenderedDOMComponentWithClass(renderedView, 'counter-table__counters');
+    CounterStore = require('../../../store');
+    var CounterTable = require('../view.jsx');
+    var renderedView = TestUtils.renderIntoDocument(<CounterTable/>);
   });
 
+  /*
   it('should display load pending message', function () {
     // TODO
   });
-
+  
   it('should display load failed message', function () {
     // TODO
   });

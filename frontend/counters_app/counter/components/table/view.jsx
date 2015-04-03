@@ -17,10 +17,10 @@ var ContainerTable = React.createClass({
       <table className="counter-table">
         <thead>
           <tr>
-            <td>Id</td>
-            <td>Title</td>
-            <td>Value</td>
-            <td></td>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Value</th>
+            <th></th>
           </tr>
         </thead>
         <tbody className="counter-table__counters">

@@ -1,33 +1,42 @@
 import Immutable from 'immutable';
 import Marty from 'marty';
-import MainConstants from '../main/constants';
 import CounterConstants from './constants';
 import CounterAPI from './source';
 
-class CounterStore extends Marty.Store {
+var CounterStore = Marty.createStore({
+  id: 'CounterStore',
 
-  constructor(options) {
-    super(options);
-    this.id = 'CounterStore';
-    this.state = Immutable.Map({});
-    this.handlers = {
-      createCounter: CounterConstants.CREATE,
-      adjustCounter: CounterConstants.ADJUST,
-      destroyCounter: CounterConstants.DESTROY,
-      updateCounters: [
-        CounterConstants.RECIEVED,
-        CounterConstants.CREATED,
-        CounterConstants.DESTROYED,
-        CounterConstants.ADJUSTED
-      ]
-    };
-  }
+  handlers: {
+    updateCounters: [
+      CounterConstants.RECIEVED,
+      CounterConstants.CREATED,
+      CounterConstants.DESTROYED,
+      CounterConstants.ADJUSTED
+    ],
+    createCounter: CounterConstants.CREATE,
+    adjustCounter: CounterConstants.ADJUST,
+    destroyCounter: CounterConstants.DESTROY
+  },
+
+  getInitialState: function () {
+    return Immutable.Map({});
+  },
+
+
+  /**
+   * Updates all counters, called after most operations on the server and on load.
+   * @param  {array} counters Current state of counters, from server
+   */
+  updateCounters: function(counters) {
+    this.state = this.state.set('counters', Immutable.OrderedSet(counters));
+    this.hasChanged();
+  },
 
   /**
    * Marty fetch function for fetching all counters from the server.
    * @return {fetch} Fetch object, see http://martyjs.org/api/stores/index.html#fetch
    */
-  getCounters() {
+  getCounters: function() {
     return this.fetch({
       id: 'all',
       locally() {
@@ -37,23 +46,14 @@ class CounterStore extends Marty.Store {
         return CounterAPI.getCounters();
       }
     });
-  }
-
-  /**
-   * Updates all counters, called after most operations on the server.
-   * @param  {array} counters Current state of counters, from server
-   */
-  updateCounters(counters) {
-    this.state = this.state.set('counters', Immutable.OrderedSet(counters));
-    this.hasChanged();
-  }
+  },
 
   /**
    * Optimistically adds a counter item with a default count of 0 and a temp id. 
    * @param  {object} counter New counter object
    * @return {promise}        Fulfilled when the server request completes
    */
-  createCounter(counter) {
+  createCounter: function(counter) {
 
     // default values for the new object
     counter.id = -1;
@@ -67,19 +67,19 @@ class CounterStore extends Marty.Store {
 
     this.hasChanged();
     return CounterAPI.createCounter(counter);
-  }
+  },
 
   /**
    * Optimistically removes a counter item before removing on the server.
    * @param  {object} counter Counter object
    * @return {promise}        Fulfilled when the server request completes
    */
-  destroyCounter(counter) {
+  destroyCounter: function(counter) {
     this.state = this.state.withMutations(function(map) {
       map.set('counters', map.get('counters').delete(counter));
     });
     return CounterAPI.destroyCounter(counter.id);
-  }
+  },
 
   /**
    * Optimistically adjusts a counter count
@@ -88,7 +88,7 @@ class CounterStore extends Marty.Store {
    * @param  {number} amount  Value to increment/decrement the counter value by (only -1 or 1)
    * @return {promise}        Fulfilled when the server request completes
    */
-  adjustCounter(counter, amount) {
+  adjustCounter: function(counter, amount) {
     this.state = this.state.withMutations(function(map) {
       map.set('counters', map.get('counters').map(function (innerCounter) {
         if (counter.id === innerCounter.id) {
@@ -100,6 +100,6 @@ class CounterStore extends Marty.Store {
     return (amount === 1) ? CounterAPI.incrementCounter(counter.id, amount) : CounterAPI.decrementCounter(counter.id, amount);
   }
 
-}
+});
 
-module.exports = Marty.register(CounterStore);
+module.exports = CounterStore;

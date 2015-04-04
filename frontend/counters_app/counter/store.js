@@ -62,7 +62,7 @@ var CounterStore = Marty.createStore({
     // This opens the object for mutations, making it a bit easier to set multiple or deep
     // values in the state.
     this.state = this.state.withMutations(function(map) {
-      map.set('counters', map.get('counters').add(counter));
+      map.set('counters', map.get('counters').push(counter));
     });
     this.hasChanged();
     return CounterAPI.createCounter(counter);

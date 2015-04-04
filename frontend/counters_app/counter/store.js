@@ -28,7 +28,7 @@ var CounterStore = Marty.createStore({
    * @param  {array} counters Current state of counters, from server
    */
   updateCounters: function(counters) {
-    this.state = this.state.set('counters', Immutable.OrderedSet(counters));
+    this.state = this.state.set('counters', Immutable.List(counters));
     this.hasChanged();
   },
 
@@ -55,7 +55,7 @@ var CounterStore = Marty.createStore({
    */
   createCounter: function(counter) {
 
-    // default values for the new object
+    // default values for the new counter
     counter.id = -1;
     counter.count = 0;
 
@@ -64,7 +64,6 @@ var CounterStore = Marty.createStore({
     this.state = this.state.withMutations(function(map) {
       map.set('counters', map.get('counters').add(counter));
     });
-
     this.hasChanged();
     return CounterAPI.createCounter(counter);
   },
@@ -78,26 +77,33 @@ var CounterStore = Marty.createStore({
     this.state = this.state.withMutations(function(map) {
       map.set('counters', map.get('counters').delete(counter));
     });
+    this.hasChanged();
     return CounterAPI.destroyCounter(counter.id);
   },
 
   /**
    * Optimistically adjusts a counter count
-   * TODO: This could be optimised to not parse the entire set of items when incrementing a value. 
-   * @param  {object} counter Counter object
+   * @param  {object} counter Counter object  
    * @param  {number} amount  Value to increment/decrement the counter value by (only -1 or 1)
    * @return {promise}        Fulfilled when the server request completes
    */
   adjustCounter: function(counter, amount) {
     this.state = this.state.withMutations( (map) => {
-      map.set('counters', map.get('counters').map( (innerCounter) => {
-        if (counter.id === innerCounter.id) {
-          return this.adjustCounterCount(counter, amount);
-        }
-        return innerCounter;
-      }));
+      map.set('counters', map.get('counters').set(this._findCounterIndexById(counter.id), this._adjustCounterCount(counter, amount)));
     });
+    this.hasChanged();
     return (amount === 1) ? CounterAPI.incrementCounter(counter.id, amount) : CounterAPI.decrementCounter(counter.id, amount);
+  },
+
+  /**
+   * Given a counter id, returns the index of that counter in the list.
+   * @param  {any}    id ID to search for
+   * @return {number}    Index of where that id is present, otherwise null if not present.
+   */
+  _findCounterIndexById: function (id) {
+    return this.state.get('counters').findIndex(function (counter) {
+      return counter.id === id;
+    });
   },
 
   /**
@@ -106,7 +112,7 @@ var CounterStore = Marty.createStore({
    * @param  {number} amount  Amount to adjust by
    * @return {object}         A new instance of the counter object with the adjusted count.
    */
-  adjustCounterCount: function (counter, amount) {
+  _adjustCounterCount: function (counter, amount) {
     return {
       id: counter.id,
       title: counter.title,

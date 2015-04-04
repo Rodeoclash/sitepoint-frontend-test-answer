@@ -74,8 +74,8 @@ var CounterStore = Marty.createStore({
    * @return {promise}        Fulfilled when the server request completes
    */
   destroyCounter: function(counter) {
-    this.state = this.state.withMutations(function(map) {
-      map.set('counters', map.get('counters').delete(counter));
+    this.state = this.state.withMutations( (map) => {
+      map.set('counters', map.get('counters').delete(this._findCounterIndexById(counter.id)));
     });
     this.hasChanged();
     return CounterAPI.destroyCounter(counter.id);
